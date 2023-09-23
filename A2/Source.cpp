@@ -1,17 +1,37 @@
 //Assignment 2 ~ Abdelrahman Hashad
 
 #include <iostream>
-#include <vector>
 #include <fstream>
+#include <vector>
+#include <string>
 
-struct STUDENT_DATA
-{
-	char* fname;
-	char* lname;
+using namespace std;
+
+struct STUDENT_DATA {
+	string firstName;
+	string lastName;
 };
 
-int main(void)
-{
+int main() {
+	vector<STUDENT_DATA> studentVector;
+	ifstream inputFile("C:\\Users\\silve\\AssignmentDocs\\StudentData.txt");
+
+	if (inputFile.is_open()) {
+		string line;
+		while (getline(inputFile, line)) {
+			size_t commaPos = line.find(',');
+			if (commaPos != std::string::npos) {
+				STUDENT_DATA student;
+				student.lastName = line.substr(0, commaPos);
+				student.firstName = line.substr(commaPos + 1);
+				studentVector.push_back(student);
+			}
+		}
+		inputFile.close();
+	}
+	else {
+		cout << "Error couldn't open the file" << std::endl;
+	}
 
 	return 0;
 }
